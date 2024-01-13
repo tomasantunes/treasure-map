@@ -62,7 +62,7 @@
             ctx.lineWidth = 5;
             
 
-            var videos_watched = 38;
+            var videos_watched = 40;
             var total_videos = 227;
             var percentage = videos_watched / total_videos;
             var x1 = 100;
@@ -74,7 +74,7 @@
             canvas_arrow(ctx, 100, 500, x3, y3);
 
             ctx.font = "20px Arial";
-            ctx.fillText("38/227 - " + (percentage * 100).toFixed(0) + "%", 140, 510);
+            ctx.fillText(videos_watched + "/" + total_videos + " - " + (percentage * 100).toFixed(0) + "%", 140, 510);
         }
         
     </script>
