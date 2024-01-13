@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Map</title>
+
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <img src="old-paper.jpg" id="img-old-paper" style="display: none" />
+    <img src="treasure-chest.png" id="img-treasure-chest" style="display: none" />
+    <canvas id="my-canvas" width="800" height="600"></canvas>
+
+    <script>
+
+        function canvas_arrow( context, fromx, fromy, tox, toy ) {
+            const dx = tox - fromx;
+            const dy = toy - fromy;
+            const headlen = Math.sqrt( dx * dx + dy * dy ) * 0.2; // length of head in pixels
+            const angle = Math.atan2( dy, dx );
+            context.beginPath();
+            context.moveTo( fromx, fromy );
+            context.lineTo( tox, toy );
+            context.stroke();
+            context.beginPath();
+            context.moveTo( tox - headlen * Math.cos( angle - Math.PI / 6 ), toy - headlen * Math.sin( angle - Math.PI / 6 ) );
+            context.lineTo( tox, toy );
+            context.lineTo( tox - headlen * Math.cos( angle + Math.PI / 6 ), toy - headlen * Math.sin( angle + Math.PI / 6 ) );
+            context.stroke();
+        }
+
+        window.onload = function() {
+            const canvas = document.getElementById("my-canvas");
+            const ctx = canvas.getContext("2d");
+            const img1 = document.getElementById("img-old-paper");
+            const img2 = document.getElementById("img-treasure-chest");
+
+            ctx.drawImage(img1, 0, 0, 800, 600); 
+            ctx.drawImage(img2, 600, 100, 150, 150);
+
+            ctx.beginPath();
+            ctx.arc(100, 500, 30, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 3;
+
+            ctx.setLineDash([20, 5]);
+            ctx.beginPath();
+            ctx.moveTo(100, 500);
+            ctx.lineTo(625, 225);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.lineWidth = 5;
+            
+
+            var videos_watched = 38;
+            var total_videos = 227;
+            var percentage = videos_watched / total_videos;
+            var x1 = 100;
+            var x2 = 625;
+            var y1 = 500;
+            var y2 = 225;
+            var x3 = x1 + ((x2 - x1) * percentage);
+            var y3 = y1 + ((y2 - y1) * percentage);
+            canvas_arrow(ctx, 100, 500, x3, y3);
+
+            ctx.font = "20px Arial";
+            ctx.fillText("38/227 - " + (percentage * 100).toFixed(0) + "%", 140, 510);
+        }
+        
+    </script>
+</body>
+</html>
